@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birthday Greeting 🎉</title>
+  <style>
+    body, html { margin:0; padding:0; font-family:sans-serif; height:100%; display:flex; align-items:center; justify-content:center; background:#f5f5f5; }
+    h1 { text-align:center; font-size:2.2rem; color:#333; }
+    #musicPrompt {
+      display:flex;
+      position:fixed;
+      top:0; left:0;
+      width:100vw; height:100vh;
+      background:rgba(0,0,0,0.8);
+      align-items:center; justify-content:center;
+      color:#fff; font-size:1.4rem;
+      cursor:pointer; z-index:999;
+    }
+    #musicPrompt div {
+      background:rgba(30,30,30,0.9);
+      padding:24px 32px;
+      border-radius:12px;
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎂 Happy Birthday! 🎂</h1>
+
+  <audio id="bgMusic" src="music.ogg" preload="auto" playsinline loop></audio>
+
+  <div id="musicPrompt" style="display:none;">
+    <div>
+      🎵 Tap anywhere to enable music
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const audio = document.getElementById('bgMusic');
+      const prompt = document.getElementById('musicPrompt');
+
+      // Attempt autoplay
+      audio.play().catch(() => {
+        prompt.style.display = 'flex';
+      });
+
+      // User interaction to resume audio
+      prompt.addEventListener('click', () => {
+        audio.play().then(() => {
+          prompt.style.display = 'none';
+        }).catch(err => {
+          console.error('Play failed:', err);
+          alert('Music couldn’t play: ' + err.message);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
